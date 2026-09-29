@@ -1,4 +1,4 @@
-\# Juicolicious Grand
+# Juicolicious Grand
 
 
 
@@ -6,29 +6,29 @@ A sampled grand piano for Windows and macOS, available as a VST3 plugin, an AU p
 
 
 
-\## Features
+## Features
 
 
 
-\- Full 88 key range, built from real grand piano recordings pitch shifted to every key
+- Full 88 key range, built from real grand piano recordings pitch shifted to every key
 
-\- Four velocity layers per note, blended together so tone and volume change smoothly with how hard you play
+- Four velocity layers per note, blended together so tone and volume change smoothly with how hard you play
 
-\- Damper release sounds when a key is lifted. The top keys ring out freely, the same way the undamped strings of a real grand do
+- Damper release sounds when a key is lifted. The top keys ring out freely, the same way the undamped strings of a real grand do
 
-\- MIDI sustain pedal support
+- MIDI sustain pedal support
 
-\- Attack and Release controls
+- Attack and Release controls
 
-\- Three ways to play: a MIDI keyboard, your computer keyboard, or the mouse
+- Three ways to play: a MIDI keyboard, your computer keyboard, or the mouse
 
-\- Key labels that show note names and the computer keyboard layout
-
-
+- Key labels that show note names and the computer keyboard layout
 
 
 
-\## Download
+
+
+## Download
 
 
 
@@ -46,13 +46,13 @@ The installers are not code signed yet, so both systems warn before running them
 
 
 
-\- Windows: on the "Windows protected your PC" screen, click More info, then Run anyway.
+- Windows: on the "Windows protected your PC" screen, click More info, then Run anyway.
 
-\- macOS: if the installer is blocked, open System Settings, go to Privacy \& Security, scroll down, and click Open Anyway.
+- macOS: if the installer is blocked, open System Settings, go to Privacy \& Security, scroll down, and click Open Anyway.
 
 
 
-\## Playing with a computer keyboard
+## Playing with a computer keyboard
 
 
 
@@ -60,29 +60,29 @@ Click the plugin window first so it receives your key presses. Every computer ke
 
 
 
-\- A S D F G H J K L play the white keys C4 D4 E4 F4 G4 A4 B4 C5 D5
+- A S D F G H J K L play the white keys C4 D4 E4 F4 G4 A4 B4 C5 D5
 
-\- W E T Y U O P play the black keys C#4 D#4 F#4 G#4 A#4 C#5 D#5
+- W E T Y U O P play the black keys C#4 D#4 F#4 G#4 A#4 C#5 D#5
 
-\- Q plays B3, one note below middle C
-
-
-
-\## How it works
+- Q plays B3, one note below middle C
 
 
 
-\- Sampling: the recordings are taken every two to three keys. Each key plays the nearest recording, resampled to the right pitch, which keeps the download small while keeping the tone close to the original.
-
-\- Velocity: each recorded note has up to four velocity layers. A note played between two layers mixes both recordings, weighted by how close the velocity is to each one.
-
-\- Release: a lifted key keeps playing from where it is and decays to silence over the Release time, while a quiet damper sound plays alongside it.
-
-\- Polyphony: up to 32 voices. When all are busy, the quietest note that is already fading gets reused first.
+## How it works
 
 
 
-\## Building from source
+- Sampling: the recordings are taken every two to three keys. Each key plays the nearest recording, resampled to the right pitch, which keeps the download small while keeping the tone close to the original.
+
+- Velocity: each recorded note has up to four velocity layers. A note played between two layers mixes both recordings, weighted by how close the velocity is to each one.
+
+- Release: a lifted key keeps playing from where it is and decays to silence over the Release time, while a quiet damper sound plays alongside it.
+
+- Polyphony: up to 32 voices. When all are busy, the quietest note that is already fading gets reused first.
+
+
+
+## Building from source
 
 
 
@@ -90,11 +90,11 @@ Requirements:
 
 
 
-\- CMake 3.22 or newer
+- CMake 3.22 or newer
 
-\- Visual Studio 2022 or newer on Windows, or Xcode on macOS
+- Visual Studio 2022 or newer on Windows, or Xcode on macOS
 
-\- JUCE 9.0.0, commit 0b6e500164d05753af8e2749238ec5d9a3e29937
+- JUCE 9.0.0, commit 0b6e500164d05753af8e2749238ec5d9a3e29937
 
 
 
@@ -122,9 +122,9 @@ The plugin loads its samples from a shared data folder. Copy the Samples folder 
 
 
 
-\- Windows: C:\\ProgramData\\JuicoliciousGrand\\Samples
+- Windows: C:\\ProgramData\\JuicoliciousGrand\\Samples
 
-\- macOS: /Library/Application Support/JuicoliciousGrand/Samples
+- macOS: /Library/Application Support/JuicoliciousGrand/Samples
 
 
 
@@ -144,17 +144,17 @@ ISCC.exe installer\\windows\\JuicoliciousGrand.iss
 
 
 
-\- Source: plugin code, including the sample playback engine, the editor, and the keyboard display
+- Source: plugin code, including the sample playback engine, the editor, and the keyboard display
 
-\- Assets: logo and title font, built into the plugin
+- Assets: logo and title font, built into the plugin
 
-\- Samples: piano recordings, installed alongside the plugin
+- Samples: piano recordings, installed alongside the plugin
 
-\- installer: installer scripts
+- installer: installer scripts
 
 
 
-\## Credits
+## Credits
 
 
 
