@@ -1,0 +1,11 @@
+# CMake build output
+build/
+
+# Visual Studio and VS Code workspace files
+.vs/
+.vscode/
+out/
+*.user
+
+# macOS Finder files
+.DS_Store
