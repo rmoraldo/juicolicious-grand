@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Juicolicious Grand</title>
+  <meta name="description" content="A free sampled grand piano for Windows and macOS. VST3, AU and standalone app.">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <img class="logo" src="assets/logo.png" alt="" width="120" height="137">
+    <h1>Juicolicious Grand</h1>
+    <p class="tagline">A free sampled grand piano for Windows and macOS</p>
+    <p class="formats">VST3 &middot; AU &middot; Standalone app</p>
+
+    <div class="download">
+      <!-- the script below swaps this link for the right installer. without the script it opens the releases page -->
+      <a id="download-button" class="button" href="https://github.com/rmoraldo/juicolicious-grand/releases/latest">
+        Download
+      </a>
+      <p id="download-meta" class="meta">Free download</p>
+      <p id="download-other" class="other"></p>
+    </div>
+  </header>
+
+  <main>
+
+    <figure class="screenshot">
+      <img src="screenshot.png" alt="The Juicolicious Grand plugin window, with Attack and Release knobs above a full 88 key keyboard" width="1000" height="751">
+    </figure>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        Juicolicious Grand is a sampled grand piano built from real recordings, playable in any DAW that
+        supports VST3 or AU plugins, or on its own as a standalone app.
+      </p>
+      <ul class="features">
+        <li><strong>Four velocity layers</strong> per note, blended so tone and volume follow how hard you play.</li>
+        <li><strong>Damper release sounds</strong> when keys are lifted, with the top keys ringing freely like a real grand.</li>
+        <li><strong>Sustain pedal, Attack and Release</strong> for shaping how notes start and end.</li>
+        <li><strong>Play three ways:</strong> with a MIDI keyboard, your computer keyboard, or the mouse.</li>
+      </ul>
+    </section>
+
+    <section class="blocked" id="installer-blocked">
+      <h2>Installer blocked?</h2>
+      <p>
+        The installer isn't code signed yet, so Windows and macOS warn before running it. It's safe to continue.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <h3>Windows</h3>
+          <ol>
+            <li>If your browser says the file isn't commonly downloaded, open the download menu and choose <strong>Keep</strong>.</li>
+            <li>On the <strong>Windows protected your PC</strong> screen, click <strong>More info</strong>, then <strong>Run anyway</strong>.</li>
+          </ol>
+        </div>
+        <div class="step">
+          <h3>macOS</h3>
+          <ol>
+            <li>Open the installer. When macOS says it can't be opened, click <strong>Done</strong>.</li>
+            <li>Open <strong>System Settings</strong>, go to <strong>Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong>.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="download.js"></script>
+</body>
+</html>

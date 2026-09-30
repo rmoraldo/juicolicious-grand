@@ -1,0 +1,232 @@
+/* this loads the same script font the plugin uses for its title. */
+@font-face {
+  font-family: "Pinyon Script";
+  src: url("assets/titlefont.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* these colours match the plugin's own palette, so the page and the plugin look like one product. */
+:root {
+  --navy: #1c3347;
+  --slate: #3f5a6e;
+  --accent: #2f6f8f;
+  --sky-top: #bfe0f0;
+  --sky-bottom: #8ec2dc;
+  --page: #f5f9fc;
+  --card: #ffffff;
+  --border: #d7e6ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--navy);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* the top band uses the plugin's background gradient. its bottom padding leaves room for the
+   screenshot below to overlap it. */
+.hero {
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  text-align: center;
+  padding: 56px 16px 180px;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 8px;
+  width: 120px;
+  height: auto;
+}
+
+h1 {
+  margin: 0;
+  font-family: "Pinyon Script", cursive;
+  font-weight: 400;
+  font-size: clamp(48px, 9vw, 76px);
+  line-height: 1.2;
+}
+
+.tagline {
+  margin: 12px 0 0;
+  font-size: 20px;
+}
+
+.formats {
+  margin: 2px 0 0;
+  color: var(--slate);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+
+.download {
+  margin-top: 28px;
+}
+
+.button {
+  display: inline-block;
+  min-width: 260px;
+  padding: 15px 32px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(28, 51, 71, 0.25);
+  transition: background 0.15s, transform 0.15s;
+}
+
+.button:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
+.button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.meta {
+  margin: 12px 0 0;
+  color: var(--slate);
+  font-size: 14px;
+}
+
+.other {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.other:empty {
+  display: none;
+}
+
+.other a,
+.blocked a {
+  color: var(--navy);
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px 72px;
+}
+
+/* the negative top margin pulls the screenshot up so it sits across the edge of the blue band. */
+.screenshot {
+  margin: -140px 0 0;
+  padding: 8px;
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(28, 51, 71, 0.28);
+}
+
+/* the white frame around the image keeps its blue background from blending into the band. */
+.screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 11px;
+}
+
+section {
+  margin-top: 64px;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 26px;
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.about p {
+  max-width: 720px;
+  margin: 0 0 20px;
+}
+
+/* the features sit in two columns on wide screens and stack on narrow ones. */
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.features li {
+  padding-left: 20px;
+  position: relative;
+}
+
+.features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.blocked {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+.blocked > p {
+  margin: 0 0 20px;
+  color: var(--slate);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.steps ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.steps li + li {
+  margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+
+  .hero {
+    padding: 40px 16px 110px;
+  }
+
+  .screenshot {
+    margin-top: -80px;
+    padding: 5px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .blocked {
+    padding: 20px;
+  }
+}
