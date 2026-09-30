@@ -10,7 +10,7 @@ project(JuicoliciousGrandPiano VERSION 0.1.0)
 add_subdirectory(${JUCE_PATH} JUCE)
 
 juce_add_plugin(JuicoliciousGrandPiano
-    COMPANY_NAME "Rayhan Moraldo"
+    COMPANY_NAME "rayraldo"
     BUNDLE_ID com.rayhanmoraldo.juicoliciousgrandpiano
     PLUGIN_MANUFACTURER_CODE Raym
     PLUGIN_CODE Jgpn
