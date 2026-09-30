@@ -15,6 +15,10 @@
   --page: #f5f9fc;
   --card: #ffffff;
   --border: #d7e6ef;
+  --warn-bg: #fff4d6;
+  --warn-border: #e7b547;
+  --warn-icon: #c98a06;
+  --warn-text: #5c4100;
 }
 
 * {
@@ -108,9 +112,77 @@ h1 {
   display: none;
 }
 
-.other a,
-.blocked a {
+.other a {
   color: var(--navy);
+}
+
+/* the installer warning sits just under the download button in amber, so it reads as a caution
+   rather than part of the blue page. */
+.warning {
+  max-width: 680px;
+  margin: 28px auto 0;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-left-width: 5px;
+  border-radius: 12px;
+  color: var(--warn-text);
+  text-align: left;
+  box-shadow: 0 4px 14px rgba(92, 65, 0, 0.12);
+}
+
+.warning summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* this hides the browser's own arrow, since the chevron on the right replaces it. */
+.warning summary::-webkit-details-marker {
+  display: none;
+}
+
+.warning summary:focus-visible {
+  outline: 3px solid var(--warn-border);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.warning-icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--warn-icon);
+}
+
+.warning-text {
+  flex: 1;
+}
+
+.chevron {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s;
+}
+
+/* this flips the chevron to point up while the panel is open. */
+.warning[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.warning .steps {
+  padding: 4px 18px 18px 52px;
+  font-size: 15px;
+}
+
+.warning h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
 main {
@@ -181,22 +253,10 @@ h3 {
   background: var(--accent);
 }
 
-.blocked {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-}
-
-.blocked > p {
-  margin: 0 0 20px;
-  color: var(--slate);
-}
-
 .steps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px 28px;
 }
 
 .steps ol {
@@ -226,7 +286,13 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .blocked {
-    padding: 20px;
+  .warning summary {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .warning .steps {
+    padding: 4px 14px 16px 14px;
+    font-size: 14px;
   }
 }

@@ -24,33 +24,19 @@
       <p id="download-meta" class="meta">Free download</p>
       <p id="download-other" class="other"></p>
     </div>
-  </header>
 
-  <main>
-
-    <figure class="screenshot">
-      <img src="screenshot.png" alt="The Juicolicious Grand plugin window, with Attack and Release knobs above a full 88 key keyboard" width="1000" height="751">
-    </figure>
-
-    <section class="about">
-      <h2>About</h2>
-      <p>
-        Juicolicious Grand is a sampled grand piano built from real recordings, playable in any DAW that
-        supports VST3 or AU plugins, or on its own as a standalone app.
-      </p>
-      <ul class="features">
-        <li><strong>Four velocity layers</strong> per note, blended so tone and volume follow how hard you play.</li>
-        <li><strong>Damper release sounds</strong> when keys are lifted, with the top keys ringing freely like a real grand.</li>
-        <li><strong>Sustain pedal, Attack and Release</strong> for shaping how notes start and end.</li>
-        <li><strong>Play three ways:</strong> with a MIDI keyboard, your computer keyboard, or the mouse.</li>
-      </ul>
-    </section>
-
-    <section class="blocked" id="installer-blocked">
-      <h2>Installer blocked?</h2>
-      <p>
-        The installer isn't code signed yet, so Windows and macOS warn before running it. It's safe to continue.
-      </p>
+    <!-- this panel starts closed so only the warning line shows. clicking it opens the steps -->
+    <details class="warning" id="installer-blocked">
+      <summary>
+        <svg class="warning-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2.5 1.5 21h21L12 2.5z" fill="currentColor"/>
+          <path d="M12 9.5v5.2M12 17.8v.2" stroke="#fff4d6" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        <span class="warning-text"><strong>Installer blocked?</strong> It isn't code signed yet, so Windows and macOS warn before running it. Here's how to open it.</span>
+        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
       <div class="steps">
         <div class="step">
           <h3>Windows</h3>
@@ -67,6 +53,27 @@
           </ol>
         </div>
       </div>
+    </details>
+  </header>
+
+  <main>
+
+    <figure class="screenshot">
+      <img src="screenshot.png" alt="The Juicolicious Grand plugin window, with Attack and Release knobs above a full 88 key keyboard" width="1000" height="751">
+    </figure>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        Juicolicious Grand is a sampled grand piano built from real recordings, playable in any DAW that
+        supports VST3 or AU plugins, or on its own as a standalone app.
+      </p>
+      <ul class="features">
+        <li><strong>Four velocity layers</strong> per note, blended so tone and volume follow how hard you play.</li>
+        <li><strong>Damper release sounds.</strong> Lifting a key plays the soft thump of the damper landing on the string, while the highest keys have no dampers and keep ringing, just like on a real grand.</li>
+        <li><strong>Sustain pedal, Attack and Release</strong> for shaping how notes start and end.</li>
+        <li><strong>Play three ways:</strong> with a MIDI keyboard, your computer keyboard, or the mouse.</li>
+      </ul>
     </section>
 
   </main>
