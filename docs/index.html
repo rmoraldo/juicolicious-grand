@@ -66,28 +66,33 @@
 
   <main>
 
-    <!-- browsers only play a video on their own when it starts muted, so the button lets visitors
-         turn the sound on. demo.js shows the button and makes it work -->
+    <!-- the video waits for a click, so it always plays with sound. demo.js runs the play and
+         pause buttons. without the script the browser's own video controls show instead -->
     <figure class="screenshot">
-      <video id="demo-video" poster="poster.jpg" width="1052" height="720"
-             autoplay muted loop playsinline preload="auto"
-             aria-label="Juicolicious Grand being played, with the pressed keys lighting up on its 88 key keyboard">
-        <!-- the browser plays the first of these it supports. almost every browser takes the mp4,
-             and the webm covers the few that can't -->
-        <source src="demo.mp4" type="video/mp4">
-        <source src="demo.webm" type="video/webm">
-      </video>
-      <button id="sound-button" class="sound-button" type="button" aria-pressed="false" hidden>
-        <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
-          <path d="m16.5 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
-          <path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span class="sound-label">Play with sound</span>
-      </button>
+      <div class="video-frame" id="video-frame">
+        <video id="demo-video" poster="poster.jpg" width="1052" height="720"
+               controls playsinline preload="metadata"
+               aria-label="Juicolicious Grand being played, with the pressed keys lighting up on its 88 key keyboard">
+          <!-- the browser plays the first of these it supports. almost every browser takes the mp4,
+               and the webm covers the few that can't -->
+          <source src="demo.mp4" type="video/mp4">
+          <source src="demo.webm" type="video/webm">
+        </video>
+
+        <button id="play-button" class="play-button" type="button" hidden>
+          <span class="play-circle">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+          </span>
+          <span class="play-label" id="play-label">Give it a listen</span>
+        </button>
+
+        <button id="pause-button" class="pause-button" type="button" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+          <span>Pause</span>
+        </button>
+
+        <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+      </div>
     </figure>
 
     <section class="about">

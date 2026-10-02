@@ -234,49 +234,142 @@ main {
   border-radius: 11px;
 }
 
-/* the sound button floats over the bottom right corner of the video. */
-.sound-button {
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 16px 9px 12px;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(28, 51, 71, 0.88);
-  color: #ffffff;
-  font: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(28, 51, 71, 0.3);
-  transition: background 0.15s;
+/* the frame holds the video and the buttons layered on top of it. */
+.video-frame {
+  position: relative;
+  border-radius: 11px;
+  overflow: hidden;
 }
 
-.sound-button:hover {
+/* the play button covers the whole video with a light shade, so the video reads as something to
+   click before it starts. */
+.play-button {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 0;
+  background: rgba(28, 51, 71, 0.22);
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s, visibility 0.2s;
+}
+
+.play-button:hover {
+  background: rgba(28, 51, 71, 0.32);
+}
+
+.play-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--navy);
+  box-shadow: 0 8px 24px rgba(28, 51, 71, 0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.play-button:hover .play-circle {
+  transform: scale(1.06);
   background: var(--accent);
 }
 
-.sound-button:focus-visible {
+.play-button:focus-visible .play-circle {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.play-button:focus-visible {
+  outline: none;
+}
+
+.play-circle svg {
+  width: 38px;
+  height: 38px;
+  margin-left: 5px;
+}
+
+.play-label {
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(28, 51, 71, 0.85);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* the pause button sits in the bottom right corner, and only shows while the video plays. */
+.pause-button {
+  position: absolute;
+  right: 18px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 15px 8px 11px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(28, 51, 71, 0.85);
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.2s, visibility 0.2s;
+}
+
+.pause-button:hover {
+  background: var(--accent);
+}
+
+.pause-button:focus-visible {
   outline: 3px solid #ffffff;
   outline-offset: 2px;
 }
 
-.sound-button svg {
-  width: 20px;
-  height: 20px;
+.pause-button svg {
+  width: 16px;
+  height: 16px;
 }
 
-/* this shows the crossed out speaker while muted and the speaker with sound waves while playing. */
-.sound-button .icon-sound,
-.sound-button.is-on .icon-muted {
+/* the bar along the bottom edge fills up as the video plays. */
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* these swap which controls show. is-playing and has-started are set by demo.js. */
+.video-frame.is-playing .play-button,
+.video-frame:not(.is-playing) .pause-button {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.video-frame.has-started .progress {
+  opacity: 1;
+}
+
+/* this keeps the buttons out of sight until demo.js turns them on. */
+.play-button[hidden],
+.pause-button[hidden] {
   display: none;
-}
-
-.sound-button.is-on .icon-sound {
-  display: block;
 }
 
 
@@ -354,17 +447,27 @@ h3 {
     padding: 5px;
   }
 
-  .sound-button {
-    right: 12px;
-    bottom: 12px;
-    gap: 6px;
-    padding: 5px 10px 5px 7px;
-    font-size: 12px;
+  .play-circle {
+    width: 60px;
+    height: 60px;
   }
 
-  .sound-button svg {
-    width: 15px;
-    height: 15px;
+  .play-circle svg {
+    width: 26px;
+    height: 26px;
+    margin-left: 3px;
+  }
+
+  .play-label {
+    font-size: 13px;
+    padding: 4px 12px;
+  }
+
+  .pause-button {
+    right: 10px;
+    bottom: 14px;
+    padding: 5px 11px 5px 8px;
+    font-size: 12px;
   }
 
   .features {
