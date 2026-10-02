@@ -16,13 +16,21 @@
     <p class="tagline">A free sampled grand piano for Windows and macOS</p>
     <p class="formats">VST3 &middot; AU &middot; Standalone app</p>
 
+    <!-- the script below points each button at its installer in the newest release. without the
+         script both buttons open the releases page -->
     <div class="download">
-      <!-- the script below swaps this link for the right installer. without the script it opens the releases page -->
-      <a id="download-button" class="button" href="https://github.com/rmoraldo/juicolicious-grand/releases/latest">
-        Download
-      </a>
-      <p id="download-meta" class="meta">Free download</p>
-      <p id="download-other" class="other"></p>
+      <div class="download-buttons">
+        <div class="download-option">
+          <a id="download-windows" class="button" href="https://github.com/rmoraldo/juicolicious-grand/releases/latest">Download for Windows</a>
+          <p id="meta-windows" class="meta">Windows 10 or later, 64 bit</p>
+        </div>
+        <div class="download-option">
+          <a id="download-mac" class="button" href="https://github.com/rmoraldo/juicolicious-grand/releases/latest">Download for macOS</a>
+          <p id="meta-mac" class="meta">macOS 11 or later</p>
+        </div>
+      </div>
+      <p id="download-version" class="version">Free download</p>
+      <p id="mobile-note" class="version" hidden>Juicolicious Grand runs on Windows and macOS computers.</p>
     </div>
 
     <!-- this panel starts closed so only the warning line shows. clicking it opens the steps -->

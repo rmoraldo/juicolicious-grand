@@ -1,41 +1,27 @@
-// this script points the download button at the right installer for the visitor's computer. it
-// asks GitHub for the newest release and finds the Windows (.exe) and macOS (.pkg) files in it,
-// so publishing a new release updates the page without editing it. if anything fails, the
-// button keeps its original link to the releases page.
+// this script points the two download buttons at the installers in the newest release. it asks
+// GitHub for the latest release and finds the Windows (.exe) and macOS (.pkg) files in it, so
+// publishing a new release updates the page without editing it. if anything fails, both buttons
+// keep their original link to the releases page.
 
 const repo = "rmoraldo/juicolicious-grand";
 const releasesPage = `https://github.com/${repo}/releases/latest`;
 
-const button = document.getElementById("download-button");
-const meta = document.getElementById("download-meta");
-const other = document.getElementById("download-other");
-
-// this reads the operating system from the browser. phones and tablets report something else,
-// which is handled below since the plugin only runs on computers.
-function detectPlatform() {
-  const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
-  const agent = navigator.userAgent || "";
-
-  if (/iPhone|iPad|iPod|Android/i.test(agent)) return "mobile";
-  if (/Win/i.test(platform)) return "windows";
-  if (/Mac/i.test(platform)) return "mac";
-  return "other";
-}
+// each entry matches one button on the page, through its id.
+const builds = [
+  { id: "windows", label: "Windows", extension: ".exe", requirement: "Windows 10 or later, 64 bit" },
+  { id: "mac", label: "macOS", extension: ".pkg", requirement: "macOS 11 or later" },
+];
 
 // this turns a file size in bytes into something readable, like 58 MB.
 function formatSize(bytes) {
   return `${Math.round(bytes / (1024 * 1024))} MB`;
 }
 
-function link(url, text) {
-  const a = document.createElement("a");
-  a.href = url;
-  a.textContent = text;
-  return a;
-}
-
-async function setUpDownload() {
-  const platform = detectPlatform();
+async function setUpDownloads() {
+  // phones and tablets can't run the plugin, so they get a short note under the buttons.
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent || "")) {
+    document.getElementById("mobile-note").hidden = false;
+  }
 
   let release;
 
@@ -48,49 +34,28 @@ async function setUpDownload() {
   }
 
   const assets = release.assets || [];
-  const windows = assets.find((asset) => asset.name.toLowerCase().endsWith(".exe"));
-  const mac = assets.find((asset) => asset.name.toLowerCase().endsWith(".pkg"));
   const version = (release.tag_name || "").replace(/^v/, "");
 
-  const builds = {
-    windows: { asset: windows, label: "Windows", requirement: "Windows 10 or later, 64 bit" },
-    mac: { asset: mac, label: "macOS", requirement: "macOS 11 or later" },
-  };
-
-  // on a phone or an unknown system, both installers are listed instead of picking one.
-  if (platform === "mobile" || platform === "other") {
-    button.textContent = "View all downloads";
-    meta.textContent = platform === "mobile"
-      ? "Juicolicious Grand runs on Windows and macOS computers."
-      : `Version ${version}`;
-
-    other.replaceChildren();
-    ["windows", "mac"].forEach((key) => {
-      if (!builds[key].asset) return;
-      if (other.childNodes.length) other.append(" · ");
-      other.append(link(builds[key].asset.browser_download_url, `Download for ${builds[key].label}`));
-    });
-    return;
+  if (version) {
+    document.getElementById("download-version").textContent = `Version ${version} · Free download`;
   }
 
-  const primary = builds[platform];
-  const secondaryKey = platform === "windows" ? "mac" : "windows";
-  const secondary = builds[secondaryKey];
+  builds.forEach((build) => {
+    const button = document.getElementById(`download-${build.id}`);
+    const meta = document.getElementById(`meta-${build.id}`);
+    const asset = assets.find((file) => file.name.toLowerCase().endsWith(build.extension));
 
-  if (primary.asset) {
-    button.href = primary.asset.browser_download_url;
-    button.textContent = `Download for ${primary.label}`;
-    meta.textContent = `Version ${version} · ${formatSize(primary.asset.size)} · ${primary.requirement}`;
-  } else {
-    button.href = releasesPage;
-    button.textContent = "View downloads";
-    meta.textContent = `The ${primary.label} version is coming soon.`;
-  }
-
-  other.replaceChildren();
-  if (secondary.asset) {
-    other.append("Also available for ", link(secondary.asset.browser_download_url, secondary.label));
-  }
+    if (asset) {
+      button.href = asset.browser_download_url;
+      meta.textContent = `${formatSize(asset.size)} · ${build.requirement}`;
+    } else {
+      // this release has no installer for this system yet, so the button is greyed out and
+      // links to the releases page instead.
+      button.href = releasesPage;
+      button.textContent = `${build.label} coming soon`;
+      button.classList.add("unavailable");
+    }
+  });
 }
 
-setUpDownload();
+setUpDownloads();

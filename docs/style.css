@@ -73,10 +73,30 @@ h1 {
   margin-top: 28px;
 }
 
+/* the two buttons sit side by side, and wrap onto separate lines when the screen is too narrow
+   to fit both. */
+.download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px 24px;
+}
+
+.download-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  max-width: 100%;
+}
+
 .button {
   display: inline-block;
-  min-width: 260px;
-  padding: 15px 32px;
+  box-sizing: border-box;
+  width: 280px;
+  text-align: center;
+  white-space: nowrap;
+  padding: 15px 20px;
   border-radius: 999px;
   background: var(--navy);
   color: #ffffff;
@@ -97,23 +117,27 @@ h1 {
   outline-offset: 3px;
 }
 
+/* this greys out a button whose installer isn't in the newest release yet. */
+.button.unavailable {
+  background: #7d93a3;
+  box-shadow: none;
+}
+
+.button.unavailable:hover {
+  background: #6d8496;
+  transform: none;
+}
+
 .meta {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   color: var(--slate);
   font-size: 14px;
 }
 
-.other {
-  margin: 4px 0 0;
+.version {
+  margin: 14px 0 0;
+  color: var(--slate);
   font-size: 14px;
-}
-
-.other:empty {
-  display: none;
-}
-
-.other a {
-  color: var(--navy);
 }
 
 /* the installer warning sits just under the download button in amber, so it reads as a caution
