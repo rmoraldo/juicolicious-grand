@@ -217,6 +217,7 @@ main {
 
 /* the negative top margin pulls the screenshot up so it sits across the edge of the blue band. */
 .screenshot {
+  position: relative;
   margin: -140px 0 0;
   padding: 8px;
   background: var(--card);
@@ -225,12 +226,59 @@ main {
 }
 
 /* the white frame around the image keeps its blue background from blending into the band. */
-.screenshot img {
+.screenshot img,
+.screenshot video {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 11px;
 }
+
+/* the sound button floats over the bottom right corner of the video. */
+.sound-button {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px 9px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(28, 51, 71, 0.88);
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(28, 51, 71, 0.3);
+  transition: background 0.15s;
+}
+
+.sound-button:hover {
+  background: var(--accent);
+}
+
+.sound-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.sound-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* this shows the crossed out speaker while muted and the speaker with sound waves while playing. */
+.sound-button .icon-sound,
+.sound-button.is-on .icon-muted {
+  display: none;
+}
+
+.sound-button.is-on .icon-sound {
+  display: block;
+}
+
 
 section {
   margin-top: 64px;
@@ -304,6 +352,19 @@ h3 {
   .screenshot {
     margin-top: -80px;
     padding: 5px;
+  }
+
+  .sound-button {
+    right: 12px;
+    bottom: 12px;
+    gap: 6px;
+    padding: 5px 10px 5px 7px;
+    font-size: 12px;
+  }
+
+  .sound-button svg {
+    width: 15px;
+    height: 15px;
   }
 
   .features {
