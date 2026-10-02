@@ -1,5 +1,8 @@
-# CMake build output
-build/
+# CMake build output, and the Mac installer output which goes in build-pkg
+build*/
+
+# Windows installer output
+installer/windows/Output/
 
 # Visual Studio and VS Code workspace files
 .vs/

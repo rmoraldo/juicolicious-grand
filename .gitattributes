@@ -1,0 +1,4 @@
+# the Mac installer scripts run on macOS, which needs Unix line endings. this keeps Git on Windows
+# from storing them with Windows line endings, which would stop them from running.
+*.sh text eol=lf
+installer/mac/scripts/** text eol=lf

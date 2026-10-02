@@ -1,0 +1,101 @@
+# this workflow borrows a Mac from GitHub, builds the plugin there, packs it into a .pkg installer,
+# test installs it, and attaches it to a GitHub release. it runs on its own whenever a release is
+# published, and can also be started by hand from the Actions tab.
+name: Build macOS installer
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release tag to attach the installer to, like v0.2.0. Leave empty to only build it."
+        required: false
+        default: ""
+
+# this lets the workflow add files to releases.
+permissions:
+  contents: write
+
+env:
+  # the JUCE version the plugin is built with. it should match the JUCE checkout used on Windows.
+  JUCE_REF: "9.0.0"
+
+jobs:
+  build-mac:
+    runs-on: macos-15
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out the plugin
+        uses: actions/checkout@v4
+
+      - name: Check out JUCE
+        uses: actions/checkout@v4
+        with:
+          repository: juce-framework/JUCE
+          ref: ${{ env.JUCE_REF }}
+          path: JUCE
+
+      # a release run takes the version from the release tag, so v0.2.0 becomes 0.2.0. a hand
+      # started run with no tag uses the version in CMakeLists.txt with "dev" on the end.
+      - name: Work out the version
+        id: version
+        env:
+          TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
+        run: |
+          if [ -n "$TAG" ]; then
+            VERSION="${TAG#v}"
+          else
+            VERSION="$(sed -nE 's/^project\(JuicoliciousGrandPiano VERSION ([0-9.]+)\).*/\1/p' CMakeLists.txt)-dev"
+          fi
+          echo "Version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Build the plugin
+        run: |
+          cmake -B build-release -DJUCE_PATH="$GITHUB_WORKSPACE/JUCE" -DCMAKE_BUILD_TYPE=Release
+          cmake --build build-release --config Release --parallel
+
+      # this prints which processor types each binary holds. both arm64 and x86_64 should show up.
+      - name: Check the build is universal
+        run: |
+          A="build-release/JuicoliciousGrandPiano_artefacts/Release"
+          lipo -archs "$A/VST3/Juicolicious Grand.vst3/Contents/MacOS/Juicolicious Grand"
+          lipo -archs "$A/AU/Juicolicious Grand.component/Contents/MacOS/Juicolicious Grand"
+          lipo -archs "$A/Standalone/Juicolicious Grand.app/Contents/MacOS/Juicolicious Grand"
+
+      - name: Build the installer
+        run: bash installer/mac/build-pkg.sh "${{ steps.version.outputs.version }}"
+
+      # this installs the .pkg on the borrowed Mac, checks every part landed in the right folder,
+      # then runs auval, Apple's own Audio Unit checker, on the installed plugin. the samples are
+      # installed too, so this also proves the plugin finds them.
+      - name: Test the installer
+        run: |
+          sudo installer -pkg "build-pkg/JuicoliciousGrand-${{ steps.version.outputs.version }}-macOS.pkg" -target /
+          test -d "/Library/Audio/Plug-Ins/VST3/Juicolicious Grand.vst3"
+          test -d "/Library/Audio/Plug-Ins/Components/Juicolicious Grand.component"
+          test -d "/Applications/Juicolicious Grand.app"
+          echo "Sustain samples installed: $(ls "/Library/Application Support/JuicoliciousGrand/Samples/Sustains" | wc -l)"
+          echo "Release samples installed: $(ls "/Library/Application Support/JuicoliciousGrand/Samples/Releases" | wc -l)"
+          killall -9 AudioComponentRegistrar || true
+          sleep 5
+          auval -v aumu Jgpn Raym | tee auval.log
+          grep -q "AU VALIDATION SUCCEEDED" auval.log
+
+      # this keeps a copy of the installer on the workflow run's page, so a hand started build
+      # can be downloaded and tried without making a release.
+      - name: Save the installer with this run
+        uses: actions/upload-artifact@v4
+        with:
+          name: JuicoliciousGrand-${{ steps.version.outputs.version }}-macOS
+          path: build-pkg/*.pkg
+
+      - name: Attach the installer to the release
+        if: steps.version.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: gh release upload "$TAG" build-pkg/*.pkg --clobber --repo "$GITHUB_REPOSITORY"

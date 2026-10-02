@@ -1,0 +1,6 @@
+#!/bin/bash
+# AudioComponentRegistrar is the background process that keeps macOS's list of Audio Unit plugins.
+# stopping it makes macOS rebuild that list, so Logic and GarageBand see the new plugin straight
+# away instead of after a restart.
+killall -9 AudioComponentRegistrar > /dev/null 2>&1
+exit 0

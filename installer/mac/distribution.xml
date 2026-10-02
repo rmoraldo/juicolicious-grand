@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- this file describes the Mac installer window. build-pkg.sh replaces __VERSION__ with the real version -->
+<installer-gui-script minSpecVersion="2">
+    <title>Juicolicious Grand</title>
+    <conclusion file="conclusion.html" mime-type="text/html"/>
+
+    <!-- customize="allow" adds the Customize button for picking parts. hostArchitectures lets the
+         installer run natively on Apple Silicon instead of asking to install Rosetta -->
+    <options customize="allow" require-scripts="false" hostArchitectures="arm64,x86_64"/>
+
+    <!-- this installs for every user on the Mac, into the system plugin and Applications folders -->
+    <domains enable_localSystem="true" enable_anywhere="false" enable_currentUserHome="false"/>
+
+    <allowed-os-versions>
+        <os-version min="11.0"/>
+    </allowed-os-versions>
+
+    <choices-outline>
+        <line choice="vst3"/>
+        <line choice="au"/>
+        <line choice="app"/>
+        <line choice="samples"/>
+    </choices-outline>
+
+    <choice id="vst3" title="VST3 plugin"
+            description="For DAWs that load VST3 plugins, such as Ableton Live, Cubase, Studio One, Bitwig and Reaper.">
+        <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.vst3"/>
+    </choice>
+
+    <choice id="au" title="Audio Unit plugin"
+            description="For Logic Pro, GarageBand and other DAWs that load Audio Units.">
+        <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.au"/>
+    </choice>
+
+    <choice id="app" title="Standalone app"
+            description="Plays the piano on its own, without a DAW. It goes in the Applications folder.">
+        <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.app"/>
+    </choice>
+
+    <!-- enabled="false" with selected="true" keeps the samples ticked and greyed out, since every
+         other part needs them to make sound -->
+    <choice id="samples" title="Piano samples (required)"
+            description="The piano recordings. The plugins and the app need these to make sound, so they are always installed."
+            enabled="false" selected="true">
+        <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.samples"/>
+    </choice>
+
+    <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.vst3" version="__VERSION__" onConclusion="none">vst3.pkg</pkg-ref>
+    <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.au" version="__VERSION__" onConclusion="none">au.pkg</pkg-ref>
+    <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.app" version="__VERSION__" onConclusion="none">app.pkg</pkg-ref>
+    <pkg-ref id="com.rayhanmoraldo.juicoliciousgrand.samples" version="__VERSION__" onConclusion="none">samples.pkg</pkg-ref>
+</installer-gui-script>

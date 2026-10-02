@@ -1,0 +1,5 @@
+#!/bin/bash
+# this clears out the samples from an older install first, so any recordings a newer version no
+# longer uses don't stay behind taking up space.
+rm -rf "/Library/Application Support/JuicoliciousGrand/Samples"
+exit 0
