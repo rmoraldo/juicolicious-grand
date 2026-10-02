@@ -48,9 +48,10 @@ build_component() {
 
     # by default macOS installs a bundle over any older copy it finds anywhere on the disk, even
     # outside the plugin folders. this turns that off, so each part always lands in its standard folder.
+    # plutil -replace sets the setting whether or not pkgbuild wrote it into the list.
     pkgbuild --analyze --root "$WORK/roots/$part" "$plist" > /dev/null
     if /usr/libexec/PlistBuddy -c "Print :0" "$plist" > /dev/null 2>&1; then
-        /usr/libexec/PlistBuddy -c "Set :0:BundleIsRelocatable false" "$plist"
+        plutil -replace 0.BundleIsRelocatable -bool NO "$plist"
         extra+=(--component-plist "$plist")
     fi
 

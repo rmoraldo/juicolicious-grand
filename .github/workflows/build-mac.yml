@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - name: Check out the plugin
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check out JUCE
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: juce-framework/JUCE
           ref: ${{ env.JUCE_REF }}
@@ -88,7 +88,7 @@ jobs:
       # this keeps a copy of the installer on the workflow run's page, so a hand started build
       # can be downloaded and tried without making a release.
       - name: Save the installer with this run
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: JuicoliciousGrand-${{ steps.version.outputs.version }}-macOS
           path: build-pkg/*.pkg
